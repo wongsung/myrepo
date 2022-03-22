@@ -1,0 +1,8 @@
+zuul:
+  routes:
+    ch:
+      service-id: consumer-hello
+      path: '/consumer/hello/**'
+    c:
+      service-id: consumer
+      path: '/consumer/**'

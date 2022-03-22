@@ -1,0 +1,38 @@
+package com.qfedu.openfeign.feign;
+
+import com.qfedu.demo.service.Book;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+/**
+ * @author 百泽
+ * @公众号 Java架构栈
+ *
+ * Book b1 = restTemplate.postForObject("http://storage/book/", p, Book.class);
+ */
+//加了 @FeignClient 依赖之后，系统会自动给 BookService 生成一个代理类，并且将之注册到 Spring 容器中
+//表示这个 Feign 客户端绑定了 storage 服务
+@FeignClient(value = "storage")
+public interface BookService {
+    /**
+     * 使用 OpenFeign 实现远程接口调用时，参数一定一定记得加注解
+     * @param id
+     * @return
+     */
+    @GetMapping("/book/")
+    Book getBookById(@RequestParam("id") Integer id);
+
+    @DeleteMapping("/book/{id}")
+    void deleteBookById(@PathVariable("id") Integer id);
+
+    @PostMapping("/book/")
+    Book addBook(@RequestBody Book book);
+
+//    @PostMapping("/book/add")
+//    String addBook2(@RequestBody Book book);
+
+    @PutMapping("/book/")
+    void updateBook(@RequestBody Book book);
+}
